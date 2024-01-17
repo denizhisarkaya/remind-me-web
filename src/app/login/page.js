@@ -6,6 +6,9 @@ import styles from './login.css';
 
 
 export default function loginPage() {
+
+
+  
   return (
 
     <div className="container">
@@ -20,7 +23,7 @@ export default function loginPage() {
 
         <Card className="shadow">
           <Card.Body>
-            <div cclassName="box2-2">
+            <div className="box2-2">
               <br />
               <div className='form'>
                 <h3>Hoşgeldiniz</h3>
