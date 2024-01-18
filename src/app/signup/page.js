@@ -2,10 +2,10 @@
 import { Button, Form, Card } from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
-import styles from './login.css';
+import styles from './signup.css';
 
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+
 
 
 export default function loginPage() {
@@ -29,13 +29,13 @@ export default function loginPage() {
             <div className="box2-2">
               <br />
               <div className='form'>
-                <h3>Hoşgeldiniz</h3>
+                <h3>Kayıt Ol</h3>
                 <br />
                 <InputGroup className="mb-3">
                   <InputGroup.Text><PersonFill size={17} /></InputGroup.Text>
                   <Form.Control
-                    placeholder="Username"
-                    aria-label="Username"
+                    placeholder="E-mail"
+                    aria-label="E-mail"
                     aria-describedby="basic-addon1"
                   />
                 </InputGroup>
@@ -45,8 +45,14 @@ export default function loginPage() {
                   <Form.Control type="password" placeholder="Şifre" />
                 </InputGroup>
                 <br />
-                <Button className='btn' variant="primary" type="submit" onClick={() => router.push('/main')}>Giriş Yap</Button>
-                <p>Hesabınız yok mu? Hemen <a href="/signup">kayıt ol</a></p>
+                <InputGroup className="mb-3">
+                  <InputGroup.Text><LockFill size={17} /></InputGroup.Text>
+                  <Form.Control type="password" placeholder="Şifre Tekrar" />
+                </InputGroup>
+                <br />
+                <Button className='btn' variant="primary" type="submit" onClick={() => router.push('/main')}>Kayıt Ol</Button>
+                <br />
+                <Button className='btn-2' variant="primary" type="submit" onClick={() => router.push('/login')}>Vazgeç</Button>
               </div>
             </div>
           </Card.Body>
