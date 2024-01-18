@@ -4,8 +4,14 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import styles from './login.css';
 
+import { useRouter } from 'next/navigation';
+
+
 
 export default function loginPage() {
+
+  const router = useRouter()
+
   return (
 
     <div className="container">
@@ -20,7 +26,7 @@ export default function loginPage() {
 
         <Card className="shadow">
           <Card.Body>
-            <div cclassName="box2-2">
+            <div className="box2-2">
               <br />
               <div className='form'>
                 <h3>Hoşgeldiniz</h3>
@@ -39,7 +45,7 @@ export default function loginPage() {
                   <Form.Control type="password" placeholder="Şifre" />
                 </InputGroup>
                 <br />
-                <Button className='btn' variant="primary" type="submit">Giriş Yap</Button>
+                <Button className='btn' variant="primary" type="submit" onClick={() => router.push('/main')}>Giriş Yap</Button>
                 <p>Hesabınız yok mu? Hemen <a href="URL">kayıt ol</a></p>
               </div>
             </div>
