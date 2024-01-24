@@ -5,12 +5,13 @@ import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import styles from './login.css';
 
 import { useRouter } from 'next/navigation';
-
+import Link from 'next/link';
 
 
 export default function loginPage() {
 
-  const router = useRouter()
+  const router = useRouter();
+  const path_main = () => router.push('/main');
 
   return (
 
@@ -45,8 +46,8 @@ export default function loginPage() {
                   <Form.Control type="password" placeholder="Şifre" />
                 </InputGroup>
                 <br />
-                <Button className='btn' variant="primary" type="submit" onClick={() => router.push('/main')}>Giriş Yap</Button>
-                <p>Hesabınız yok mu? Hemen <a href="URL">kayıt ol</a></p>
+                <Button className='btn' variant="primary" type="submit" onClick={path_main}>Giriş Yap</Button>
+                <p>Hesabınız yok mu? Hemen <a href="/signup">kayıt ol</a></p>
               </div>
             </div>
           </Card.Body>

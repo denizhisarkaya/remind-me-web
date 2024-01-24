@@ -32,6 +32,12 @@ body {
 .btn {
     width: 400px;
     background-color: #525E75;
+    display: block;
+}
+.btn-2 {
+    width: 400px;
+    background-color: #853227;
+    display: block;
 }
 
 a {
