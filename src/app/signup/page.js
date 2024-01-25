@@ -1,4 +1,5 @@
 'use client'
+// 'use client' komutu, bu sayfanın bir istemci tarafı (client-side) kod olduğunu belirtir.
 
 import { useState, useEffect } from 'react';
 import { Button, Form, Card } from 'react-bootstrap';
@@ -9,37 +10,50 @@ import axios from 'axios';
 import styles from './signup.css';
 
 
-
-
 export default function loginPage() {
 
+  // useRouter hook'unu kullanarak yönlendirme işlemleri için router nesnesini alır.
+  // path_login fonksiyonu, '/login' sayfasına yönlendirir.
   const router = useRouter();
   const path_login = () => router.push('/login');
 
+  // userMail state'ini tanımlar ve varsayılan değerini boş bir dize olarak ayarlar.
+  // userPassword state'ini tanımlar ve varsayılan değerini boş bir dize olarak ayarlar.
   const [userMail, setUserMail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
+  // E-posta alanındaki değişiklikleri işler.
   const handleMailChange = (e) => {
     setUserMail(e.target.value);
   };
-
+  // Şifre alanındaki değişiklikleri işler.
   const handlePasswordChange = (e) => {
     setUserPassword(e.target.value);
   };
 
+  // Kayıt işlemini gerçekleştirir.
   const handleRegister = async () => {
     try {
+
+      // Kullanıcı tarafından girilen verileri kontrol eder.
+      if (!userMail || !userPassword) {
+        console.error('E-posta veya şifre boş bırakılamaz.');
+        alert('E-posta veya şifre boş bırakılamaz.'); // Uyarı göster
+        return;
+      }
+
       const user = {
         user_mail: userMail,
         user_password: userPassword,
       };
 
+      // Kullanıcı bilgilerini bir POST isteği ile sunucuya gönderir.
       const response = await axios.post('http://localhost:8000/users', user);
 
       if (response.status === 201) {
         console.log('Kullanıcı başarıyla kaydedildi.');
-        // Başka bir sayfaya yönlendirme yapabilirsiniz.
-        // router.push('/success');
+        // Login sayfasına yönlendirme yapılır.
+        path_login();
       } else {
         console.error('Kullanıcı kaydı başarısız.');
       }
@@ -80,7 +94,7 @@ export default function loginPage() {
                 <br />
                 <InputGroup className="mb-3">
                   <InputGroup.Text><LockFill size={17} /></InputGroup.Text>
-                  <Form.Control id='user_password' type="password" placeholder="Şifre" onChange={handlePasswordChange} /> 
+                  <Form.Control type="password" placeholder="Şifre" onChange={handlePasswordChange} />
                 </InputGroup>
                 <br />
                 <InputGroup className="mb-3">
