@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import axios from 'axios';
+import RequestManager from '../request_class/requestManager.js';
 import styles from './login.css';
 
 
@@ -33,14 +33,14 @@ export default function loginPage() {
   const handleLogin = async () => {
     try {
       // Kullanıcı adı ve şifreyi backend'e gönder
-      const response = await axios.post('http://localhost:8000/login', { user_mail: username, user_password: password });
+      const response = await RequestManager.login(username, password);
 
       // Başarılı bir şekilde giriş yapıldıysa '/main' sayfasına yönlendir
-      if (response.status === 200) {
+      if (response.message === 'Login successful') {
         path_main();
       }
     } catch (error) {
-      if(error.response.status === 401){
+      if(error.response && error.response.status === 401){
         alert('Yanlış kullanıcı adı veya şifre!');
       }else{
         console.error('Giriş hatası:', error);

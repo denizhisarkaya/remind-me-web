@@ -6,7 +6,7 @@ import { Button, Form, Card } from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import RequestManager from '../request_class/requestManager.js';
 import styles from './signup.css';
 
 
@@ -42,15 +42,10 @@ export default function loginPage() {
         return;
       }
 
-      const user = {
-        user_mail: userMail,
-        user_password: userPassword,
-      };
-
       // Kullanıcı bilgilerini bir POST isteği ile sunucuya gönderir.
-      const response = await axios.post('http://localhost:8000/users', user);
+      const response = await RequestManager.registerUser(userMail, userPassword);
 
-      if (response.status === 201) {
+      if (response) {
         console.log('Kullanıcı başarıyla kaydedildi.');
         // Login sayfasına yönlendirme yapılır.
         path_login();
