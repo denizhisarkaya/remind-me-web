@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import RequestManager from '../request_class/requestManager.js';
+import login from '../../services/loginService.js';
 import styles from './login.css';
 
 
@@ -33,18 +33,18 @@ export default function loginPage() {
   const handleLogin = async () => {
     try {
       // Kullanıcı adı ve şifreyi backend'e gönder
-      const response = await RequestManager.login(username, password);
+      const response = await login(username, password);
 
       // Başarılı bir şekilde giriş yapıldıysa '/main' sayfasına yönlendir
-      if (response.message === 'Login successful') {
+      if (response.status === 200) {
         path_main();
+      } else if (response.status === 401) {
+        alert('Yanlış kullanıcı adı veya şifre!');
+      } else {
+        throw new Error("Hata meydana geldi");
       }
     } catch (error) {
-      if(error.response && error.response.status === 401){
-        alert('Yanlış kullanıcı adı veya şifre!');
-      }else{
-        console.error('Giriş hatası:', error);
-      }
+      console.error('Giriş hatası:', error);
     }
   };
 

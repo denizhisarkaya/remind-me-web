@@ -6,7 +6,7 @@ import { Button, Form, Card } from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import { useRouter } from 'next/navigation';
-import RequestManager from '../request_class/requestManager.js';
+import registerUser from '../../services/signupService.js';
 import styles from './signup.css';
 
 
@@ -34,7 +34,6 @@ export default function loginPage() {
   // Kayıt işlemini gerçekleştirir.
   const handleRegister = async () => {
     try {
-
       // Kullanıcı tarafından girilen verileri kontrol eder.
       if (!userMail || !userPassword) {
         console.error('E-posta veya şifre boş bırakılamaz.');
@@ -43,14 +42,16 @@ export default function loginPage() {
       }
 
       // Kullanıcı bilgilerini bir POST isteği ile sunucuya gönderir.
-      const response = await RequestManager.registerUser(userMail, userPassword);
-
-      if (response) {
-        console.log('Kullanıcı başarıyla kaydedildi.');
+      const response = await registerUser(userMail, userPassword);
+      console.log(response);
+      if (response.status === 200) {
+        alert('Kullanıcı başarıyla kaydedildi.');
         // Login sayfasına yönlendirme yapılır.
         path_login();
+      } else if (response.status === 409) {
+        alert('Aynı mail ile yeniden kayıt yapamazsınız!');
       } else {
-        console.error('Kullanıcı kaydı başarısız.');
+        throw new Error("Hata Meydana Geldi");
       }
     } catch (error) {
       console.error('İstek sırasında bir hata oluştu:', error);
