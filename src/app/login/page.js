@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import login from '../../services/loginService.js';
 import styles from './login.css';
+import Cookie from '@/services/cookieService.js';
 
 
 export default function loginPage() {
@@ -34,17 +35,20 @@ export default function loginPage() {
     try {
       // Kullanıcı adı ve şifreyi backend'e gönder
       const response = await login(username, password);
+      console.log(response);
 
       // Başarılı bir şekilde giriş yapıldıysa '/main' sayfasına yönlendir
       if (response.status === 200) {
-        path_main();
+        // save to cookie
+        Cookie.set("remindmejwt", response.data.token, false);
+        path_main();  // Başarılı giriş durumunda ana sayfaya yönlendirme işlemi
       } else if (response.status === 401) {
-        alert('Yanlış kullanıcı adı veya şifre!');
+        alert('Yanlış kullanıcı adı veya şifre!');  // Hatalı giriş durumunda uyarı mesajı gösterme
       } else {
-        throw new Error("Hata meydana geldi");
+        throw new Error("Hata meydana geldi");   // Beklenmeyen bir durumda hata fırlatma
       }
     } catch (error) {
-      console.error('Giriş hatası:', error);
+      console.error('Giriş hatası:', error);  // Hata durumunda hatayı konsola yazdırma
     }
   };
 

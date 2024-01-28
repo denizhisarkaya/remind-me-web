@@ -42,18 +42,20 @@ export default function loginPage() {
       }
 
       // Kullanıcı bilgilerini bir POST isteği ile sunucuya gönderir.
-      const response = await registerUser(userMail, userPassword);
+      const response = await registerUser(userMail, userPassword);  // Kullanıcıyı kaydetmek için sunucuya istek yapılır
       console.log(response);
-      if (response.status === 200) {
+
+      // Sunucudan dönen yanıtın durumunu kontrol eder
+      if (response.status === 201) {  // Başarılı durum kodu: Kullanıcı başarıyla kaydedildi
         alert('Kullanıcı başarıyla kaydedildi.');
         // Login sayfasına yönlendirme yapılır.
-        path_login();
-      } else if (response.status === 409) {
+        path_login();  // Kullanıcıyı giriş sayfasına yönlendirir
+      } else if (response.status === 409) {  // Çakışan durum kodu: Aynı mail ile yeniden kayıt yapılamaz
         alert('Aynı mail ile yeniden kayıt yapamazsınız!');
       } else {
-        throw new Error("Hata Meydana Geldi");
+        throw new Error("Hata Meydana Geldi");  // Beklenmeyen bir hata durumunda hata fırlatılır
       }
-    } catch (error) {
+    } catch (error) {// İstek sırasında oluşan hataları yakalar
       console.error('İstek sırasında bir hata oluştu:', error);
     }
   };
